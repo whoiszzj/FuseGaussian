@@ -93,6 +93,7 @@ For toy data you may refer to [here](https://drive.google.com/drive/folders/1ZNm
 ### Outputs (default)
 
 - `fuse_out/fuse_gaussian.ply`: fused 3D Gaussians (PLY)
+
 If `--save_cams` is set:
 - `fuse_out/cams/`: exported camera files in MVS-style `*_cam.txt` format
 
