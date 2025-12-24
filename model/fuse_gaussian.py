@@ -1,4 +1,5 @@
 import torch
+import time
 import os
 from model.gaussian2d_to_3d import gaussian2d_to_3d
 from model.voxel_grid import build_gaussian_voxels_gpu
@@ -32,6 +33,7 @@ class FuseGaussian():
                 This controls per-voxel K as K_v = ceil(N_v / max_points_per_gaussian).
             kmeans_max_iter: Maximum number of K-means iterations for voxel-wise clustering.
         """
+        time_start = time.time()    
         # 1) Convert all per-view 2D Gaussians into 3D Gaussians in world space.
         gaussian3d = []
         for i in range(self.image_num):
@@ -58,7 +60,8 @@ class FuseGaussian():
         voxel_coords, pos_all, scale_all, quat_all, color_all = build_gaussian_voxels_gpu(
             gaussian3d,
             idxs,
-            device=self.device
+            device=self.device, 
+            save_all_gaussians=False
         )
         print("Build voxel grid done")
         
@@ -72,6 +75,9 @@ class FuseGaussian():
             max_points_per_gaussian=max_points_per_gaussian,
             kmeans_max_iter=kmeans_max_iter,
         )
+        print("Cluster and fuse gaussians done")
+        time_end = time.time()
+        print(f"Fuse gaussian done in {time_end - time_start:.2f} seconds")
         
         save_gaussian_ply(f"fuse_out/fuse_gaussian.ply", fused_pos, fused_scale, fused_quat, fused_color)
         print("Save fuse gaussian done")

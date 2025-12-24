@@ -195,5 +195,5 @@ def save_gaussian_ply(path, pos, scale, rotation, color, sh_degree: int = 0):
 
     print(
         f"[✔] Gaussian PLY saved to {path}, "
-        f"total {M} splats | n_dc={n_dc}, n_rest={n_rest}, sh_degree={sh_degree}"
+        f"total {M} splats"
     )

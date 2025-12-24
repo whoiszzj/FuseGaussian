@@ -6,7 +6,8 @@ from utils.io import save_gaussian_ply
 def build_gaussian_voxels_gpu(
     gaussian3d_list,
     voxel_indices_list,
-    device="cuda"
+    device="cuda",
+    save_all_gaussians=False
 ):
     """
     Aggregate multi-view Gaussians into voxels and return concatenated tensors on GPU.
@@ -63,8 +64,9 @@ def build_gaussian_voxels_gpu(
     color_all   = torch.cat(all_color, dim=0)         # [P,3]
     
     # Debug: write a PLY of all gaussians before fusion.
-    save_gaussian_ply(f"fuse_out/gaussians_all.ply",pos_all, scale_all, quat_all, color_all)
-    print("Save gaussians done")
+    if save_all_gaussians:
+        save_gaussian_ply(f"fuse_out/gaussians_all.ply",pos_all, scale_all, quat_all, color_all)
+        print("Save gaussians done")
 
     return voxel_coords, pos_all, scale_all, quat_all, color_all
 

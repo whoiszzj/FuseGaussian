@@ -48,7 +48,7 @@ The three dataloaders have slightly different layouts, but they all need to alig
 - `images/`: RGB images (`.png` / `.jpg`)
 - `cams/`: camera intrinsics/extrinsics
 - `depths/` or `APD/`: depth maps (format depends on dataset)
-- `gaussians/`: per-view 2D Gaussian checkpoints (default path: `*/net/gaussian_model.pth.tar`)
+- `gaussians/`: per-view 2D Gaussian checkpoints (default path: `*/net/gaussian_model.pth.tar`). For parsing 2D Gaussians, you can use the [Instant-GI](https://github.com/whoiszzj/Instant-GI) library.
 
 See:
 
@@ -69,7 +69,7 @@ python3 main.py --dataset dtu --data_path /path/to/scene --device cuda
 - `--dataset`: dataset type, one of `dtu`, `da3`, `mvs`
 - `--data_path`: path to the scene root directory (**required**)
 - `--device`: torch device string, e.g. `cuda` or `cpu`
-- `--voxel_size`: voxel edge length used to quantize 3D positions (default: `2.0`)
+- `--voxel_size`: voxel edge length used to quantize 3D positions. **This parameter should be set according to your camera parameters and scene scale.** (default: `2.0` for DTU dataset)
 - `--max_points_per_gaussian`: max points per fused gaussian within a voxel (default: `8`)
 - `--kmeans_max_iter`: max K-means iterations per voxel (default: `15`)
 - `--save_cams`: if set, save MVS-style camera files to `fuse_out/cams`
@@ -87,16 +87,18 @@ python3 main.py \
   --save_cams
 ```
 
+For toy data you may refer to [here](https://drive.google.com/drive/folders/1ZNmUFxhLuIiaINA_6aokFBbOqcAei-UN?usp=sharing). The result may looks like: 
+![scan24.png](assets/scan24.png)
+
 ### Outputs (default)
 
 - `fuse_out/fuse_gaussian.ply`: fused 3D Gaussians (PLY)
-- `fuse_out/gaussians_all.ply`: all 3D Gaussians before fusion (for debugging/inspection)
 If `--save_cams` is set:
 - `fuse_out/cams/`: exported camera files in MVS-style `*_cam.txt` format
 
 ## Notes
 
 - The pipeline targets GPU by default (`device="cuda"`). To run on CPU, pass `device="cpu"` explicitly (much slower).
-- This repository does not include datasets; please prepare your own and follow the dataloader conventions.
+- This repository does not include datasets; please prepare your own and follow the dataloader conventions. Or refer to [google drive](https://drive.google.com/drive/folders/1ZNmUFxhLuIiaINA_6aokFBbOqcAei-UN?usp=sharing) for a toy dataset.
 
 
