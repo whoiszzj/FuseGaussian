@@ -1,0 +1,49 @@
+# Python cache / bytecode
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project outputs / artifacts
+fuse_out/
+outputs/
+logs/
+runs/
+
+# Large ML artifacts
+*.pt
+*.pth
+*.ckpt
+*.pth.tar
+*.tar
+
+# Visualization exports
+*.ply
+
+# Data blobs (keep source code under dataset/ tracked)
+*.bin
+*.pfm
+
+
